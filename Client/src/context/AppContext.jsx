@@ -1,18 +1,66 @@
-import { createContext, use, useContext, useState } from "react";
+import { createContext, use, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { dummyProducts } from "../assets/assets";
+import toast from "react-hot-toast";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
+
+    const currency = import.meta.VITE_CURRENCY
+
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [isSeller, setIsSeller] = useState(false);
     const [showUserLogin, setShowUserLogin] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [cartItems, setCartItems] = useState({});
 
+    // fetch all products
+    const fetchProducts = async () => {
+        setProducts(dummyProducts);
+    }
 
-    const value = { user, setUser, isSeller, setIsSeller, navigate, showUserLogin, setShowUserLogin };
+    // add product to cart
+    const addToCart = (indexid) => {
+        let cartData = structuredClone(cartItems);
+        if(cartData[indexid]){
+            cartData[indexid] += 1;
+        }else{
+            cartData[indexid] = 1;
+        }
+        setCartItems(cartData);
+        toast.success('Item added to cart');
+    }
+
+    //update cart items quantity
+    const updateCartItems = (indexid, quantity) => {
+        let cartData = structuredClone(cartItems);
+        cartData[indexid] = quantity;
+        setCartItems(cartData);
+        toast.success('Item quantity updated');
+    }
+
+    //remove product from cart
+    const removeFromCart = (indexid) => {
+        let cartData = structuredClone(cartItems);
+        if(cartData[indexid]){
+            cartData[indexid] -= 1;
+            if(cartData[indexid] === 1){
+                delete cartData[indexid];
+            }               
+        }
+        toast.success('Item removed from cart');
+        setCartItems(cartData);
+    }
+ 
+    useEffect(() => {
+        fetchProducts();
+    })
+
+    const value = { user, setUser, isSeller, setIsSeller, navigate, showUserLogin, setShowUserLogin, products, currency ,addToCart, updateCartItems, removeFromCart, cartItems};
     return <AppContext.Provider value={value}>
-        {children}
+        {children} 
     </AppContext.Provider>;
 };
 
