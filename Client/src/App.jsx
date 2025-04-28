@@ -3,6 +3,7 @@ import Navbar from './components/Navbar.jsx'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home.jsx'
 import { Toaster } from 'react-hot-toast'
+import Footer from './components/Footer.jsx'
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path='/' element={<Home />} /> 
         </Routes>
       </div>
+      {!isSellerPath && <Footer />}
     </div>
   )
 }
