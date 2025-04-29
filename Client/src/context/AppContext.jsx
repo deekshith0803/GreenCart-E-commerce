@@ -12,9 +12,10 @@ export const AppContextProvider = ({ children }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [isSeller, setIsSeller] = useState(false);
-    const [showUserLogin, setShowUserLogin] = useState(false);
+    const [showUserLogin, setShowUserLogin] = useState(true);
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState({});
+    const {searchQuary, setSearchQuary} = useState({})
 
     // fetch all products
     const fetchProducts = async () => {
@@ -24,9 +25,9 @@ export const AppContextProvider = ({ children }) => {
     // add product to cart
     const addToCart = (indexid) => {
         let cartData = structuredClone(cartItems);
-        if(cartData[indexid]){
+        if (cartData[indexid]) {
             cartData[indexid] += 1;
-        }else{
+        } else {
             cartData[indexid] = 1;
         }
         setCartItems(cartData);
@@ -44,23 +45,39 @@ export const AppContextProvider = ({ children }) => {
     //remove product from cart
     const removeFromCart = (indexid) => {
         let cartData = structuredClone(cartItems);
-        if(cartData[indexid]){
+        if (cartData[indexid]) {
             cartData[indexid] -= 1;
-            if(cartData[indexid] === 1){
+            if (cartData[indexid] === 1) {
                 delete cartData[indexid];
-            }               
+            }
         }
         toast.success('Item removed from cart');
         setCartItems(cartData);
     }
- 
+
     useEffect(() => {
         fetchProducts();
     })
 
-    const value = { user, setUser, isSeller, setIsSeller, navigate, showUserLogin, setShowUserLogin, products, currency ,addToCart, updateCartItems, removeFromCart, cartItems};
+    const value = {
+        user,
+        setUser,
+        isSeller,
+        setIsSeller,
+        navigate,
+        showUserLogin,
+        setShowUserLogin,
+        products,
+        currency,
+        addToCart,
+        updateCartItems,
+        removeFromCart,
+        cartItems,
+        searchQuary,
+        setSearchQuary
+    };
     return <AppContext.Provider value={value}>
-        {children} 
+        {children}
     </AppContext.Provider>;
 };
 
