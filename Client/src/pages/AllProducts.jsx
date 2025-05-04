@@ -3,23 +3,19 @@ import { useAppContext } from '../context/AppContext'
 import ProductCard from '../components/ProductCard';
 
 const AllProducts = () => {
-
-    const { products, searchQuery } = useAppContext();
+    const { products, searchQuary } = useAppContext(); // Fixed typo in variable name
     const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
-        if ((searchQuery ?? '').length > 0) {
-            setFilteredProducts(products.filter(
-                product => product.name.toLowerCase()
-                    .includes(searchQuery.toLowerCase())
-            ))
-        } else {
-            setFilteredProducts(products)
-        }
-    }, [products, searchQuery])
+        const searchTerm = searchQuary?.trim().toLowerCase() || '';
 
-    console.log('Filtered Products:', filteredProducts);
+        const filtered = products.filter(product => {
+            const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+            return matchesSearch && product.inStock;
+        });
 
+        setFilteredProducts(filtered);
+    }, [products, searchQuary]); // Fixed dependency array
 
     return (
         <div className='mt-16 flex flex-col'>
@@ -29,14 +25,19 @@ const AllProducts = () => {
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 mt-6">
-                {filteredProducts
-                    .filter((product) => product.inStock)
-                    .map((product) => (
-                        <ProductCard key={product.id || product.name} product={product} />
-                    ))}
+                {filteredProducts.map((product) => (
+                    <ProductCard
+                        key={product._id} // Removed fallback to name since _id is unique
+                        product={product}
+                    />
+                ))}
             </div>
 
-
+            {filteredProducts.length === 0 && (
+                <div className="w-full text-center py-12 text-gray-500">
+                    No products found matching your search
+                </div>
+            )}
         </div>
     )
 }

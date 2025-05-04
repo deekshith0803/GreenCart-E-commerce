@@ -12,34 +12,34 @@ const MainBanner = () => {
       {/* Text and Buttons */}
       <div className='absolute inset-0 flex flex-col justify-end md:justify-center items-center md:items-start px-4 md:px-16 lg:px-20 xl:px-28 pb-24 md:pb-0 z-10'>
 
-        <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold leading-snug text-center md:text-left text-black max-w-[90%] md:max-w-[550px]'>
+        <h1 className='text-3xl md:text-3xl lg:text-5xl font- text-center md:text-left max-w-72 md:max-w-80 lg:max-w-105 leading-tight lg:leading-15'>
           Freshness You Can Trust, Savings You Will Love
         </h1>
 
         <div className='flex flex-col sm:flex-row gap-4 mt-6 font-medium'>
           {/* Primary Button - always visible */}
-          <Link 
-            to={"/products"} 
+          <Link
+            to={"/products"}
             className='group flex items-center gap-2 px-6 md:px-8 py-3 bg-primary hover:bg-primary-dull text-white transition rounded-full cursor-pointer'
           >
             Shop now
-            <img 
-              className='md:hidden transition group-focus:translate-x-2' 
-              src={assets.white_arrow_icon} 
-              alt="arrow" 
+            <img
+              className='md:hidden transition group-focus:translate-x-2'
+              src={assets.white_arrow_icon}
+              alt="arrow"
             />
           </Link>
 
           {/* Secondary Button - hidden on small screens, visible from md and up */}
-          <Link 
-            to={"/products"} 
+          <Link
+            to={"/products"}
             className='group hidden md:flex items-center gap-2 px-8 py-3 cursor-pointer text-black'
           >
             Explore Deals
-            <img 
-              className='transition group-hover:translate-x-2' 
-              src={assets.black_arrow_icon} 
-              alt="arrow" 
+            <img
+              className='transition group-hover:translate-x-2'
+              src={assets.black_arrow_icon}
+              alt="arrow"
             />
           </Link>
         </div>

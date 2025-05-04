@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import search_icon from "./search_icon.svg";
 import remove_icon from "./remove_icon.svg";
 import arrow_right_icon_colored from "./arrow_right_icon_colored.svg";
@@ -69,6 +68,7 @@ import vanilla_muffins_image from "./vanilla_muffins_image.png";
 import quinoa_image from "./quinoa_image.png";
 import brown_rice_image from "./brown_rice_image.png";
 import barley_image from "./barley_image.png";
+import logo from "./logo.png";
 
 export const assets = {
   logo,
@@ -98,7 +98,9 @@ export const assets = {
   bottom_banner_image_sm,
   add_address_iamge,
   box_icon,
+
 };
+
 
 export const categories = [
   {
@@ -389,7 +391,7 @@ export const dummyProducts = [
   },
   {
     _id: "ek57j78k",
-    name: "Paneer 200g",
+    name: "Paneer 200g (Regular)",
     category: "Dairy",
     price: 90,
     offerPrice: 85,
@@ -421,7 +423,7 @@ export const dummyProducts = [
   },
   {
     _id: "ek59j90k",
-    name: "Paneer 200g",
+    name: "Paneer 200g (Low Fat)",
     category: "Dairy",
     price: 90,
     offerPrice: 85,

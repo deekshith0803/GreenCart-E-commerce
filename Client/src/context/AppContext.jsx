@@ -7,15 +7,16 @@ export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
 
-    const currency = import.meta.VITE_CURRENCY
+    const currency = import.meta.env.VITE_CURRENCY;
+    const navigate = useNavigate();     
 
-    const navigate = useNavigate();
+    // State declarations
     const [user, setUser] = useState(null);
     const [isSeller, setIsSeller] = useState(false);
     const [showUserLogin, setShowUserLogin] = useState(true);
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState({});
-    const {searchQuary, setSearchQuary} = useState({})
+    const [searchQuary, setSearchQuary] = useState("");
 
     // fetch all products
     const fetchProducts = async () => {
@@ -57,7 +58,7 @@ export const AppContextProvider = ({ children }) => {
 
     useEffect(() => {
         fetchProducts();
-    })
+    }, []);
 
     const value = {
         user,
@@ -76,6 +77,7 @@ export const AppContextProvider = ({ children }) => {
         searchQuary,
         setSearchQuary
     };
+
     return <AppContext.Provider value={value}>
         {children}
     </AppContext.Provider>;
