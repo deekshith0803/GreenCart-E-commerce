@@ -15,7 +15,7 @@ const AllProducts = () => {
         });
 
         setFilteredProducts(filtered);
-    }, [products, searchQuary]); // Fixed dependency array
+    }, [products, searchQuary]);
 
     return (
         <div className='mt-16 flex flex-col'>
@@ -27,7 +27,7 @@ const AllProducts = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 mt-6">
                 {filteredProducts.map((product) => (
                     <ProductCard
-                        key={product._id} // Removed fallback to name since _id is unique
+                        key={product._id} 
                         product={product}
                     />
                 ))}

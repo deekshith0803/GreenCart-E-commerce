@@ -3,11 +3,13 @@ import { assets } from '../assets/assets'
 import { useAppContext } from '../context/AppContext'
 
 const ProductCard = ({ product }) => {
-    const [count, setCount] = React.useState(0);
     const { currency, addToCart, removeFromCart, updateCartItems, cartItems, navigate } = useAppContext();
 
     return product && (
-        <div className="border border-gray-500/20 rounded-md p-3 bg-white w-full max-w-xs md:max-w-sm lg:max-w-md">
+        <div onClick={() => {
+            navigate(`/products/${product.category.toLowerCase()}/${product._id}`);
+            scrollTo(0, 0);
+        }} className="border border-gray-500/20 rounded-md p-3 bg-white w-full max-w-xs md:max-w-sm lg:max-w-md">
             <div className="group cursor-pointer flex justify-center px-2">
                 <img className="group-hover:scale-105 transition transform max-w-full md:max-w-36" src={product.image[0]} alt={product.name} />
             </div>
@@ -36,7 +38,11 @@ const ProductCard = ({ product }) => {
                         ) : (
                             <div className="flex items-center justify-center gap-2 w-full max-w-[120px] h-[34px] bg-primary/25 rounded">
                                 <button
-                                    onClick={() => { setCount(() => { removeFromCart(product._id) }) }}
+                                    // onClick={() => { setCount(() => { removeFromCart(product._id) }) }}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        removeFromCart(product._id);
+                                    }}
                                     className="cursor-pointer text-md px-2 h-full">
                                     -
                                 </button>
