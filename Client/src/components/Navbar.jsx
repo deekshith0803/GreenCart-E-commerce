@@ -5,7 +5,7 @@ import { useAppContext } from '../context/AppContext'
 
 const Navbar = () => {
     const [open, setOpen] = React.useState(false)
-    const { user, setUser, setShowUserLogin, navigate, setSearchQuary, searchQuary, getCartCiunt } = useAppContext();
+    const { user, setUser, setShowUserLogin, navigate, setSearchQuary, searchQuary, getCartCount } = useAppContext();
 
     const logout = async () => {
         setUser(null);
@@ -56,7 +56,7 @@ const Navbar = () => {
                 <div onClick={() => navigate('/cart')} className="relative cursor-pointer">
                     <img src={assets.nav_cart_icon} alt="cart" className='w-6 opacity-80' />
                     <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">
-                        {getCartCiunt()}
+                        {getCartCount()}
                     </button>
                 </div>
 
@@ -85,7 +85,7 @@ const Navbar = () => {
                 <div onClick={() => navigate('/cart')} className="relative cursor-pointer">
                     <img src={assets.nav_cart_icon} alt="cart" className='w-6 opacity-80' />
                     <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">
-                        {getCartCiunt()}
+                        {getCartCount()}
                     </button>
                 </div>
                 <button onClick={() => setOpen(() => open ? setOpen(false) : setOpen(true))} aria-label="Menu" >

@@ -8,7 +8,7 @@ export const AppContext = createContext();
 export const AppContextProvider = ({ children }) => {
 
     const currency = import.meta.env.VITE_CURRENCY;
-    const navigate = useNavigate();     
+    const navigate = useNavigate();
 
     // State declarations
     const [user, setUser] = useState(null);
@@ -44,16 +44,17 @@ export const AppContextProvider = ({ children }) => {
     }
 
     //remove product from cart
+    // AppContext.jsx
     const removeFromCart = (indexid) => {
         let cartData = structuredClone(cartItems);
         if (cartData[indexid]) {
             cartData[indexid] -= 1;
-            if (cartData[indexid] === 1) {
+            if (cartData[indexid] <= 0) {
                 delete cartData[indexid];
             }
         }
-        toast.success('Item removed from cart');
         setCartItems(cartData);
+        toast.success('Item removed from cart');
     }
 
     useEffect(() => {
@@ -61,9 +62,9 @@ export const AppContextProvider = ({ children }) => {
     }, []);
 
     //get cart item count
-    const getCartCiunt = () => {
+    const getCartCount = () => {
         let totalCount = 0;
-        for(const item in cartItems) {
+        for (const item in cartItems) {
             totalCount += cartItems[item];
         }
         return totalCount;
@@ -72,14 +73,14 @@ export const AppContextProvider = ({ children }) => {
     //get cart total amount
     const getCartTotalAmount = () => {
         let totalAmount = 0;
-        for(const item in cartItems) {
-            let itemInfo = products.find((product) => product._id === item);
-            if(cartItems[item] > 0) {
-                totalAmount =+ itemInfo.offerPrice * cartItems[item];
+        for (const item in cartItems) {
+            const itemInfo = products.find(product => product._id === item);
+            if (itemInfo && cartItems[item] > 0) {
+                totalAmount += itemInfo.offerPrice * cartItems[item];
             }
         }
         return Math.floor(totalAmount * 100) / 100;
-    }
+    };
 
     const value = {
         user,
@@ -97,8 +98,8 @@ export const AppContextProvider = ({ children }) => {
         cartItems,
         searchQuary,
         setSearchQuary,
-        getCartCiunt,
-        getCartTotalAmount
+        getCartCount,
+        getCartTotalAmount,
     };
 
     return <AppContext.Provider value={value}>

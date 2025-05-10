@@ -9,6 +9,7 @@ import AllProducts from './pages/AllProducts.jsx'
 import ProductCategory from './pages/ProductCategory.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
+import Cart from './pages/Cart.jsx'
 
 const App = () => {
 
@@ -28,6 +29,7 @@ const App = () => {
           <Route path='/products/:category/:id' element={<ProductDetails />} />
           <Route path='/products/:category' element={<ProductCategory />} />
           <Route path='/products' element={<AllProducts />} />
+          <Route path='/cart' element={<Cart />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </div>
