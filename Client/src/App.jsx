@@ -11,6 +11,7 @@ import ProductDetails from './pages/ProductDetails.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 import Cart from './pages/Cart.jsx'
 import AddAddress from './pages/AddAddress.jsx'
+import MyOrder from './pages/MyOrder.jsx'
 
 const App = () => {
 
@@ -32,6 +33,7 @@ const App = () => {
           <Route path='/products' element={<AllProducts />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/add-address' element={<AddAddress />} />
+          <Route path='/my-order' element={<MyOrder />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </div>
