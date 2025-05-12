@@ -12,14 +12,20 @@ import NotFoundPage from './pages/NotFoundPage.jsx'
 import Cart from './pages/Cart.jsx'
 import AddAddress from './pages/AddAddress.jsx'
 import MyOrder from './pages/MyOrder.jsx'
+import SellerLogin from './components/seller/SellerLogin.jsx'
+import SellerLayout from './pages/seller/SellerLayout.jsx'
+import ProductList from './pages/seller/ProductList.jsx'
+import Order from './pages/seller/Order.jsx'
+import AddProduct from './pages/seller/AddProduct.jsx'
+
 
 const App = () => {
 
   const isSellerPath = useLocation().pathname.includes('/seller');
-  const { showUserLogin } = useAppContext();
+  const { showUserLogin, isSeller } = useAppContext();
 
   return (
-    <div>
+    <div className='text-default min-h-screen text-gray-700 bg-white'>
       {isSellerPath ? null : <Navbar />}
       {showUserLogin ? <Login /> : null}
 
@@ -34,6 +40,11 @@ const App = () => {
           <Route path='/cart' element={<Cart />} />
           <Route path='/add-address' element={<AddAddress />} />
           <Route path='/my-order' element={<MyOrder />} />
+          <Route path='/seller' element={isSeller ? <SellerLayout /> : <SellerLogin />} >
+            <Route index element={isSeller ? <AddProduct /> : null} />
+            <Route path='product-list' element={<ProductList />} />
+            <Route path='order' element={<Order />} />
+          </Route>
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </div>

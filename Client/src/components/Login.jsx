@@ -12,7 +12,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const onSubmitHandler = async (event) =>{
+    const onSubmitHandler = async (event) => {
         event.preventDefault();
         setUser({
             email: 'a@gmail.com',
@@ -53,7 +53,8 @@ const Login = () => {
                         Create an account? <span onClick={() => setState("register")} className="text-primary cursor-pointer">click here</span>
                     </p>
                 )}
-                <button className="bg-primary hover:bg-primary-dull transition-all text-white w-full py-2 rounded-md cursor-pointer">
+                <button
+                    className="bg-primary hover:bg-primary-dull transition-all text-white w-full py-2 rounded-md cursor-pointer">
                     {state === "register" ? "Create Account" : "Login"}
                 </button>
             </form>
