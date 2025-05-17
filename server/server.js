@@ -5,11 +5,14 @@ import connectDB from "./configs/db.js";
 import "dotenv/config";
 import userRoute from "./routes/userRoute.js";
 import sellerRoute from "./routes/sellerRoute.js";
+import connectCloudinary from "./configs/cloudinary.js";
+import productRoute from "./routes/productRoute.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
 
 await connectDB();
+await connectCloudinary()
 
 //allow multiple origins
 const allowedOrigins = ["http://localhost:5173"];
@@ -30,6 +33,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/user", userRoute);
 app.use("/api/seller ", sellerRoute);
+app.use("/api/product", productRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
