@@ -41,10 +41,22 @@ export const sellerLogin = async (req, res) => {
 //seller auth : /api/seller/is-auth
 export const isSellerAuth = async (req, res) => {
   try {
-    return res.json({ success: true,  });
+    const token = req.cookies.sellerToken;
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Not authenticated" });
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Add additional verification if needed (e.g. check email)
+    return res.json({ success: true });
   } catch (error) {
-    console.log(error.message);
-    return res.status(500).json({ success: false, message: error.message });
+    if (error.name === "TokenExpiredError") {
+      return res
+        .status(401)
+        .json({ success: false, message: "Session expired" });
+    }
+    return res.status(401).json({ success: false, message: "Invalid token" });
   }
 };
 
@@ -56,7 +68,10 @@ export const sellerLogout = async (req, res) => {
       secure: process.env.NODE_ENV === "production", //use secure cookies in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", //CSRF protection
     });
-    return res.json({ success: true, message: "Seller logged out successfully" });
+    return res.json({
+      success: true,
+      message: "Seller logged out successfully",
+    });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ success: false, message: error.message });

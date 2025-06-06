@@ -15,7 +15,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 await connectDB();
-await connectCloudinary()
+await connectCloudinary();
 
 //allow multiple origins
 const allowedOrigins = ["http://localhost:5173"];
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRoute);
-app.use("/api/seller ", sellerRoute);
+app.use("/api/seller", sellerRoute);
 app.use("/api/product", productRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/address", addressRoute);
