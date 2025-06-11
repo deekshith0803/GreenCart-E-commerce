@@ -6,6 +6,8 @@ export const addProduct = async (req, res) => {
   try {
     let productData = JSON.parse(req.body.productData);
 
+    console.log(productData);
+
     const images = req.files;
 
     let imageUrl = await Promise.all(
@@ -23,8 +25,8 @@ export const addProduct = async (req, res) => {
       success: true,
       message: "Product added successfully",
     });
+    
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({
       success: false,
       message: error.message,

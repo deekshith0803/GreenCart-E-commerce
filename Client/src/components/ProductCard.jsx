@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
                         <span className="text-gray-500/60 text-sm line-through">{currency}{product.price}</span>
                     </p>
                     <div onClick={(e) => { e.stopPropagation() }} className="text-primary">
-                        {!cartItems[product._id] ? (
+                        {!cartItems?.[product._id] ? (
                             <button
                                 className="flex items-center justify-center gap-2 bg-primary/10 border border-primary/40 w-[64px] h-[34px] rounded cursor-pointer text-sm px-2 py-1"
                                 onClick={() => addToCart(product._id)}>

@@ -25,11 +25,13 @@ function AddProduct() {
         offerPrice,
       }
       const formData = new FormData();
-      formData.append('productData', JSON.stringify(productData));
-      for (let i = 0; i < files.length; i++) {
-        formData.append('images', files[i]);
-      }
-      const { data } = await axios.post('/api/product/add', formData);
+      formData.append("productData", JSON.stringify(productData));
+
+      files.forEach((file) => {
+        formData.append("images", file);
+      });
+      const { data } = await axios.post("/api/product/add", formData);
+      console.log(data);
       if (data.success) {
         toast.success(data.message);
         setName('');

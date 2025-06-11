@@ -69,6 +69,9 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    console.log("Login request body:", req.body);
+
+
     //validation
     if (!email || !password)
       return res
@@ -137,6 +140,7 @@ export const logout = async (req, res) => {
       httpOnly: true, //prevent JavaScript to access cookie
       secure: process.env.NODE_ENV === "production", //use secure cookies in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", //CSRF protection
+
     });
     return res.json({ success: true, message: "User logged out successfully" });
   } catch (error) {

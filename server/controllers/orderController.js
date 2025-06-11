@@ -1,4 +1,4 @@
-import Product from "../model/Product.js";
+import Product from "../model/product.js"
 import Order from "../model/Order.js";
 
 //place order COD : /api/order/cod
