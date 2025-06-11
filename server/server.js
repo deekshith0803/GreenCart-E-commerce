@@ -10,6 +10,7 @@ import productRoute from "./routes/productRoute.js";
 import cartRoute from "./routes/cartRoute.js";
 import addressRoute from "./routes/addressRoute.js";
 import orderRoute from "./routes/orderRoute.js";
+import { stripeWebhooks } from "./controllers/orderController.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -29,6 +30,9 @@ app.use(
     credentials: true,
   })
 );
+
+//stripe webhooks
+app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
 app.get("/", (req, res) => {
   res.send("API is running");

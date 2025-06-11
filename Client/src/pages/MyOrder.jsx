@@ -6,15 +6,25 @@ const MyOrder = () => {
 
 
     const [myOrder, setMyOrder] = useState([]);
-    const { currency } = useAppContext();
+    const { currency, axios, user } = useAppContext();
 
     const fetchMyOrder = async () => {
-        setMyOrder(dummyOrders);
+        try {
+            const {data} = await axios.get(`/api/order/user`);
+            if(data.success) {
+                setMyOrder(data.orders);
+
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
     useEffect(() => {
-        fetchMyOrder();
-    }, [])
+        if(user){
+            fetchMyOrder();
+        }
+    }, [user])
 
     return (
         <div className='mt-6    `'>

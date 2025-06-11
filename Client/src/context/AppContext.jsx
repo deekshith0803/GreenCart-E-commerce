@@ -136,6 +136,7 @@ export const AppContextProvider = ({ children }) => {
         getCartTotalAmount,
         axios,
         fetchProducts,
+        setCartItems
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -6,4 +6,5 @@ const cartRoute = express.Router()
 
 cartRoute.post('/update',authUser, updateCart)
 
+
 export default cartRoute

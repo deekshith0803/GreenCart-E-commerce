@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { assets, dummyAddress } from '../assets/assets';
+import toast from 'react-hot-toast';
 
 const Cart = () => {
 
-    const { products, currency, cartItems, removeFromCart, getCartCount, updateCartItems, navigate, getCartTotalAmount } = useAppContext();
+    const { products, currency, cartItems, removeFromCart, getCartCount, updateCartItems, navigate, getCartTotalAmount, axios, user, setCartItems } = useAppContext();
 
     const [cartArray, setCartArray] = useState([])
-    const [address, setAddress] = useState(dummyAddress)
+    const [address, setAddress] = useState([])
     const [showAddress, setShowAddress] = useState(false)
-    const [selectedAddress, setSelectedAddress] = useState(dummyAddress[0])
+    const [selectedAddress, setSelectedAddress] = useState(null)
     const [paymentOptions, setPaymentOptions] = useState("COD")
 
     const getCart = () => {
@@ -26,15 +27,90 @@ const Cart = () => {
         setCartArray(tempArray);
     }
 
-    const placeOrder = async () => {
-
+    const getUserAddress = async () => {
+        try {
+            const { data } = await axios.get('/api/address/get');
+            if (data.success) {
+                setAddress(data.address);
+                if (data.address.length > 0) {
+                    setSelectedAddress(data.address[0]);
+                }
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
     }
+
+    const placeOrder = async () => {
+        try {
+            if (!selectedAddress) {
+                toast.error("Please select an address");
+                return;
+            }
+
+            if (paymentOptions === "COD") {
+                const { data } = await axios.post("/api/order/cod", {
+                    userId: user._id,
+                    items: cartArray.map((item) => ({
+                        product: item._id,
+                        quantity: item.quantity,
+                    })),
+                    address: selectedAddress,
+                });
+
+                if (!user?._id) {
+                    toast.error("User not found");
+                    return;
+                }
+
+                if (data.success) {
+                    toast.success(data.message);
+                    setCartItems({});
+                    navigate("/my-order");
+                } else {
+                    toast.error(data.message);
+                }
+            } else {
+                //place order stripe
+                const { data } = await axios.post("/api/order/stripe", {
+                    userId: user._id,
+                    items: cartArray.map((item) => ({
+                        product: item._id,
+                        quantity: item.quantity,
+                    })),
+                    address: selectedAddress,
+                });
+
+                if (!user?._id) {
+                    toast.error("User not found");
+                    return;
+                }
+
+                if (data.success) {
+                    window.location.replace(data.url);
+                } else {
+                    toast.error(data.message);
+                }
+            }
+        } catch (error) {
+            toast.error(error.message || "Something went wrong");
+        }
+    };
+
 
     useEffect(() => {
         if (products.length > 0 && cartItems) {
             getCart()
         }
     }, [cartItems, cartItems])
+
+    useEffect(() => {
+        if (user) {
+            getUserAddress();
+        }
+    }, [user])
 
     return products.length > 0 && cartItems ? (
         <div className="flex flex-col md:flex-row mt-16">
